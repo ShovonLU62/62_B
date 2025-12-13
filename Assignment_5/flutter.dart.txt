@@ -1,0 +1,68 @@
+ import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: "Flutter BottomNavigationBar",
+      home: MyStatefulWidget(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({super.key});
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIdx = 0;
+  
+  static const TextStyle optionStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
+  
+  static const List<Widget> _widgetOption = <Widget>[
+    Text("Home Page", style: optionStyle),
+    Text("Course Page", style: optionStyle),
+    Text("Contact Page", style: optionStyle),
+  ];
+
+  //Method to hendle tap selection
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIdx = index;
+    });
+  }
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Demo BottomNavigationBar in Flutter",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+      ),
+      body: Center(
+        child: _widgetOption.elementAt(_selectedIdx)),
+      bottomNavigationBar: BottomNavigationBar(
+        mouseCursor: SystemMouseCursors.resizeLeftRight,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "Courses"
+            ),
+          BottomNavigationBarItem(icon: Icon(Icons.mail), label: "Mail")
+          ],
+        currentIndex: _selectedIdx,
+        selectedItemColor: Colors.green,
+        onTap: _onItemTapped,
+        showUnselectedLabels: true,
+      ),
+    );
+  }
+}
